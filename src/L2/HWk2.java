@@ -198,21 +198,26 @@ public class HWk2 {
         int i = 0, j = 0;
         int dx = 0, dy = 0;  //разница в габаритах
         int startx, starty;  //точка отсчёта сравнения
+        boolean err = false;
 
         if((nums1.length > nums2.length)||(nums1[0].length > nums2[0].length))  //не помещается
             System.out.println("ERROR");
         else{
-            dx = nums2.length - nums1.length;
-            dy = nums2[0].length - nums1[0].length;
+            dx = nums2.length - nums1.length + 1;          //чтобы выполнилось хотя бы 1 раз
+            dy = nums2[0].length - nums1[0].length + 1;    //чтобы выполнилось хотя бы 1 раз
             for(startx = 0;startx < dx;startx++){
                 for (starty = 0; starty < dy; starty++){   //взяли точку отсчёта
+                    err = false;                           //только начали очередное сравнение
                     for(i = 0;i < nums1.length;i++){       //сравниваем
                         for (j = 0; j < nums1[0].length; j++){
-                            if(nums1[i][j] != nums2[i+startx][j+starty]) break;
+                            if(nums1[i][j] != nums2[i+startx][j+starty]){
+                                err = true;
+                                break;
+                            }
                         }
-                        if(nums1[i][j] != nums2[i+startx][j+starty]) break;
+                        if(err == true) break;
                     }
-                    if((i == nums1.length)&&(j == nums1[0].length)){   //расхождений не обнаружено
+                    if(err == false){   //расхождений не обнаружено
                         System.out.println("Array included!");
                         return;                                        //заканчиваем
                     }
